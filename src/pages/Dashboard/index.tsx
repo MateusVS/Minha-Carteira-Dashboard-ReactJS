@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Dashboard: React.FC = () => {
-    return(
+    return (
         <h1>Dashboard</h1>
     );
 }
