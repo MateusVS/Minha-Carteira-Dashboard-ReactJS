@@ -1,0 +1,5 @@
+Hook useMemo: Armazena valores na funcao, para que quando ela for chamada nao precise ser "re-calculada"
+
+Criacao de tipagem, para utilizacao em estilo de temas, por exemplo: Ver exemplo em styles/styled.d.ts
+
+Editar componente pronto com styled-components: Ver exemplo no styles.ts do componente Toggle
