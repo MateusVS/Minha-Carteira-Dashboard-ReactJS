@@ -43,7 +43,7 @@ const List: React.FC<IRouteParams> = ({ match }): JSX.Element => {
             ?
             {
                 title: 'Entradas',
-                lineColor: '#F7931B',
+                lineColor: '#4E41F0',
                 data: gains
             }
             :
