@@ -11,6 +11,7 @@ import listOfMonths from '../../utils/months';
 
 import happyImg from '../../assets/happy.svg';
 import sadImg from '../../assets/sad.svg';
+import grinning from '../../assets/grinning.svg';
 
 import { Container, Content } from './styles';
 
@@ -54,6 +55,73 @@ const Dashboard: React.FC = () => {
         });
     },[]);
 
+    const totalExpenses = useMemo(() => {
+        let total: number = 0;
+
+        expenses.forEach(item => {
+            const date = new Date(item.date);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+
+            if (month === monthSelected && year === yearSelected) {
+                try {
+                    total += Number(item.amount);
+                } catch {
+                    throw new Error('Invalid amount! Amount must be number.')
+                }
+            }
+        });
+        return total;
+    },[monthSelected, yearSelected]);
+
+    const totalGains = useMemo(() => {
+        let total: number = 0;
+
+        gains.forEach(item => {
+            const date = new Date(item.date);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+
+            if (month === monthSelected && year === yearSelected) {
+                try {
+                    total += Number(item.amount);
+                } catch {
+                    throw new Error('Invalid amount! Amount must be number.')
+                }
+            }
+        });
+        return total;
+    },[monthSelected, yearSelected]);
+
+    const totalBalance = useMemo(() => {
+        return totalGains - totalExpenses;
+    },[totalGains, totalExpenses]);
+
+    const message = useMemo(() => {
+        if (totalBalance < 0) {
+            return {
+                title: "Que triste!",
+                description: "Neste mês, você gastou mais do que deveria.",
+                footerText: "Verifique seus gastos e tente cortar algumas coisas desnecessárias.",
+                icon: sadImg
+            }
+        } else if (totalBalance === 0) {
+            return {
+                title: "Ufaa!",
+                description: "Neste mês, você gastou exatamente o que ganhou.",
+                footerText: "Tome cuidado. No próximo mês tente poupar seu dinheiro.",
+                icon: grinning
+            }
+        } else {
+            return {
+                title: "Muito bem!",
+                description: "Sua carteira está positiva!",
+                footerText: "Continue assim. Considere investir o seu saldo.",
+                icon: happyImg
+            }
+        }
+    }, [totalBalance]);
+
     const handleMonthSelected = (month: string) => {
         try {
             const parseMonth = Number(month);
@@ -80,10 +148,11 @@ const Dashboard: React.FC = () => {
             </ContentHeader>
 
             <Content>
-                <WalletBox title="saldo" color="#4E41F0" amount={150.00} footer="atualizado com base nas entradas e saidas" icon="dolar" />
-                <WalletBox title="entradas" color="#F7931B" amount={5000.00} footer="atualizado com base nas entradas e saidas" icon="arrowUp" />
-                <WalletBox title="saídas" color="#E44C4E" amount={4850.00} footer="atualizado com base nas entradas e saidas" icon="arrowDown" />
-                <MessageBox title="Muito bem!" description="Sua carteira está positiva!" footerText="Continue assim. Considere investir o seu saldo." icon={happyImg} />
+                <WalletBox title="saldo" color="#4E41F0" amount={totalBalance} footer="atualizado com base nas entradas e saidas" icon="dolar" />
+                <WalletBox title="entradas" color="#F7931B" amount={totalGains
+                } footer="atualizado com base nas entradas e saidas" icon="arrowUp" />
+                <WalletBox title="saídas" color="#E44C4E" amount={totalExpenses} footer="atualizado com base nas entradas e saidas" icon="arrowDown" />
+                <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
             </Content>
         </Container>
     );
