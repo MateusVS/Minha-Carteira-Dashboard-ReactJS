@@ -15,37 +15,35 @@ interface IBarChartProps {
     }[]
 }
 
-const BarChartBox: React.FC<IBarChartProps> = ({ title, data }): JSX.Element => {
-    return (
-        <Container>
-            <SideLeft>
-                <h2>{title}</h2>
-                <LegendContainer>
-                    {
-                        data.map((indicator) => (
-                            <Legend key={indicator.name} color={indicator.color}>
-                                <div>{indicator.percent}%</div>
-                                <span>{indicator.name}</span>
-                            </Legend>
-                        ))
-                    }
+const BarChartBox: React.FC<IBarChartProps> = ({ title, data }): JSX.Element =>  (
+    <Container>
+        <SideLeft>
+            <h2>{title}</h2>
+            <LegendContainer>
+            {
+                data.map((indicator) => (
+                    <Legend key={indicator.name} color={indicator.color}>
+                        <div>{indicator.percent}%</div>
+                        <span>{indicator.name}</span>
+                    </Legend>
+                ))
+            }
             </LegendContainer>
-            </SideLeft>
+        </SideLeft>
 
-            <SideRight>
-                <ResponsiveContainer>
-                    <BarChart data={data}>
-                        <Bar dataKey="amount" name="Valor">
-                            {data.map((indicator) => (
-                                    <Cell key={indicator.name} fill={indicator.color} cursor="pointer" />
-                            ))}
-                        </Bar>
-                        <Tooltip formatter={(value) => formatCurrency(Number(value))} cursor={{ fill: 'none' }} />
-                    </BarChart>
-                </ResponsiveContainer>
-            </SideRight>
-        </Container>
-    );
-}
+        <SideRight>
+            <ResponsiveContainer>
+                <BarChart data={data}>
+                    <Bar dataKey="amount" name="Valor">
+                    {data.map((indicator) => (
+                        <Cell key={indicator.name} fill={indicator.color} cursor="pointer" />
+                    ))}
+                    </Bar>
+                    <Tooltip formatter={(value) => formatCurrency(Number(value))} cursor={{ fill: 'none' }} />
+                </BarChart>
+            </ResponsiveContainer>
+         </SideRight>
+    </Container>
+);
 
 export default BarChartBox
