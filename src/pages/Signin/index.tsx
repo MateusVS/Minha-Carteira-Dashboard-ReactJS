@@ -4,7 +4,8 @@ import logoImg from '../../assets/logo.svg';
 
 import { Container, Logo, Form, FormTitle } from './styles';
 
-import Input from '../../components/input';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
     return (
@@ -18,7 +19,7 @@ const SignIn: React.FC = () => {
                 <FormTitle>Entrar</FormTitle>
                 <Input type="email" placeholder="e-mail" required/>
                 <Input type="password" placeholder="senha" required />
-                <button type="submit">Acessar</button>
+                <Button type="submit">Acessar</Button>
             </Form>
         </Container>
     );
