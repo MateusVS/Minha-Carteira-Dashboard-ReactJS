@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useContext } from 'react';
 import { uuid } from 'uuidv4';
 
 import ContentHeader from '../../components/ContentHeader';
@@ -12,6 +12,7 @@ import formatDate from '../../utils/formatDate';
 import listOfMonths from '../../utils/months';
 
 import { Container, Content, Filters } from './styles';
+import { ThemeContext } from 'styled-components';
 
 interface IRouteParams {
     match: {
@@ -31,6 +32,7 @@ interface IData {
 }
 
 const List: React.FC<IRouteParams> = ({ match }): JSX.Element => {
+    const { colors } = useContext(ThemeContext);
     const [data, setData] = useState<IData[]>([]);
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
@@ -43,16 +45,16 @@ const List: React.FC<IRouteParams> = ({ match }): JSX.Element => {
             ?
             {
                 title: 'Entradas',
-                lineColor: '#4E41F0',
+                lineColor: colors.success,
                 data: gains
             }
             :
             {
                 title: 'Saídas',
-                lineColor: '#E44C4E',
+                lineColor: colors.warning,
                 data: expenses
             }
-    }, [movimentType]);
+    }, [colors.success, colors.warning, movimentType]);
 
     const years = useMemo(() => {
         let uniqueYears:number[] = [];
@@ -133,11 +135,11 @@ const List: React.FC<IRouteParams> = ({ match }): JSX.Element => {
                 amountFormatted: formatCurrency(Number(item.amount)),
                 frequency: item.frequency,
                 dateFormatted: formatDate(item.date),
-                tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E',
+                tagColor: item.frequency === 'recorrente' ? colors.success : colors.warning,
             }
         });
         setData(formattedDate);
-    },[pageData, monthSelected, yearSelected, data.length, frequencyFilterSelected]);
+    },[pageData, monthSelected, yearSelected, data.length, frequencyFilterSelected, colors.success, colors.warning]);
 
     return (
         <Container>
