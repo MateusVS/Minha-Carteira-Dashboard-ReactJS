@@ -29,6 +29,9 @@ export const Header = styled.header`
         margin-bottom: 20px;
         padding-left: 16px;
     }
+    @media(max-width: 1280px) {
+        flex-direction: column;
+    }
 `;
 
 export const LegendContainer = styled.ul`
@@ -55,5 +58,11 @@ export const Legend = styled.li<ILegendProps>`
     }
     > span {
         margin-left: 5px;
+    }
+    @media(max-width: 1280px) {
+        > div {
+            width: 30px;
+            height: 30px;
+        }
     }
 `;
