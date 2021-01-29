@@ -11,7 +11,7 @@ import { Container, Header, LogoImg, Title, MenuContainer, MenuItemLink, MenuIte
 const Aside: React.FC = () => {
     const { SignOut } = useAuth();
     return (
-        <Container>
+        <Container menuIsOpen={false}>
             <Header>
                 <LogoImg src={logoImg} alt="Logo Minha Carteira" />
                 <Title>Minha Carteira</Title>
